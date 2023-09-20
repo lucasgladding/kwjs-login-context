@@ -6,6 +6,12 @@ export const handlers = [
             context.status(200),
             context.json({
                 token: '12345',
+                user: {
+                    name: 'John Smith',
+                    settings: {
+                        isDarkMode: true,
+                    }
+                }
             })
         )
     }),

@@ -1,6 +1,11 @@
-import { useState } from 'react'
+import { useAuthContext } from '../contexts/Auth.tsx'
 
 export default function Account() {
-    const [name] = useState<string | undefined>('John Smith')
-    return <div>{name}</div>
+    const { authenticated, user, logout } = useAuthContext()
+    return <div>
+        <div>{ authenticated ? 'authenticated' : 'not authenticated' }</div>
+        <div>{ user?.name ?? 'none' }</div>
+        <div>{ user?.settings?.isDarkMode ? 'dark mode' : 'light mode' }</div>
+        <button onClick={logout}>Logout</button>
+    </div>
 }

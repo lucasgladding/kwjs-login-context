@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import axios from 'axios'
+import { useAuthContext } from '../contexts/Auth.tsx'
 
 type LoginFormData = {
     username: string,
@@ -7,6 +7,8 @@ type LoginFormData = {
 }
 
 export default function LoginForm() {
+    const { login } = useAuthContext()
+
     const [formData, setFormData] = useState<LoginFormData>({
         username: '',
         password: '',
@@ -27,7 +29,7 @@ export default function LoginForm() {
 
     async function onFormSubmit(event: FormEvent) {
         event.preventDefault()
-        await axios.post('/api/login', formData)
+        await login()
     }
 
     return <form onSubmit={onFormSubmit}>

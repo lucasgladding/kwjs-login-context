@@ -7,6 +7,18 @@ describe('Auth', () => {
     it('is not authenticated', () => {
         const { result } = renderHook(() => useAuthContext(), { wrapper })
         expect(result.current.authenticated).toEqual(false)
+        expect(result.current.user?.name).toEqual(undefined)
+        expect(result.current.user?.settings).toEqual(undefined)
+    })
+
+    it('can get the user on login', async () => {
+        const { result } = renderHook(() => useAuthContext(), { wrapper })
+        await result.current.login()
+        await waitFor(() => {
+            expect(result.current.authenticated).toEqual(true)
+            expect(result.current.user?.name).toEqual('John Smith')
+            expect(result.current.user?.settings).toEqual({ isDarkMode: true })
+        })
     })
 
     it('can login then logout', async () => {
